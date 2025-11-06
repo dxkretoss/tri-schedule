@@ -22,13 +22,11 @@ const Header = () => {
             </button>
           </div>
 
+          <div className="hidden lg:block w-[169px]" />
+
           {/* Center (Logo) */}
-          <div className="flex justify-center flex-1">
-            <img
-              src="/Logo.svg"
-              alt="Logo"
-              className="object-contain w-[120px] sm:w-[150px]"
-            />
+          <div className="flex justify-end lg:justify-center flex-1">
+            <img src="/Logo.svg" alt="Logo" className="object-contain" />
           </div>
 
           {/* Right (Buttons for Desktop Only) */}
