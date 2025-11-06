@@ -7,24 +7,24 @@ const Hero = () => {
     <section className="gradient-bg relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0" />
 
-      <div className="container relative z-10 px-6 py-32 mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 md:py-32 mx-auto">
+        <div className="grid lg:grid-cols-2  items-center">
           {/* Left Content */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-8 px-6 animate-fade-in md:w-[492px] m-auto">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                 Master Every Sport.
                 <br />
                 <span className="text-[#3440B5]">Track Every Second.</span>
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
+              <p className="text-[19px] text-muted-foreground max-w-xl">
                 TriSchedule syncs seamlessly with your Garmin and Apple Watch
                 for all-sport tracking, deep analytics, and smart recovery
                 insights in one place.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex sm:flex-row gap-4">
               {/* <Button
                 size="lg"
                 className="text-lg h-14 px-8 shadow-elegant hover:scale-105 transition-smooth"
@@ -40,11 +40,11 @@ const Hero = () => {
                 <PlayCircle className="mr-2 h-5 w-5" />
                 Get from Play Store
               </Button> */}
-              <button className="text-lg h-14 shadow-elegant hover:scale-105 transition-smooth ">
-                <img src="/android.svg" />
+              <button className="text-lg h-14  hover:scale-105 transition-smooth ">
+                <img src="/android.svg" className="w-[160px] md:w-full" />
               </button>
-              <button className="text-lg h-14 shadow-elegant hover:scale-105 transition-smooth ">
-                <img src="/apple.svg" />
+              <button className="text-lg h-14 hover:scale-105 transition-smooth ">
+                <img src="/apple.svg" className="w-[160px] md:w-full" />
               </button>
             </div>
 

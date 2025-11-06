@@ -1,20 +1,38 @@
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAthletes, setIsOpenAthletes] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
+      {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F7FB]/80 backdrop-blur-md border-b border-[#E2E8F0]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between  px-6 py-3">
-          <div className="w-[169px]" />
-
-          <div className="flex justify-center">
-            <img src="/Logo.svg" alt="Logo" className="object-contain" />
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+          {/* Left (Logo Placeholder for spacing) */}
+          <div className="w-[169px] flex items-center lg:hidden">
+            {/* MOBILE MENU ICON */}
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="p-2 text-[#3440B5] hover:bg-[#E0E6F8] rounded-md transition"
+            >
+              <Menu size={26} />
+            </button>
           </div>
 
-          <div className="flex gap-4">
+          {/* Center (Logo) */}
+          <div className="flex justify-center flex-1">
+            <img
+              src="/Logo.svg"
+              alt="Logo"
+              className="object-contain w-[120px] sm:w-[150px]"
+            />
+          </div>
+
+          {/* Right (Buttons for Desktop Only) */}
+          <div className="hidden lg:flex gap-4">
             <button
               onClick={() => setIsOpen(true)}
               className="bg-[#EBF0FA] font-semibold text-[#3440B5] w-[120px] h-[42px] border border-[#3440B5] rounded-[6px] hover:bg-[#E0E6F8] transition"
@@ -31,14 +49,63 @@ const Header = () => {
         </div>
       </header>
 
-      {isOpen && (
+      {/* MOBILE SIDEBAR MENU */}
+      {isMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50"
+          className="fixed inset-0 z-50 flex"
           onClick={(e) => {
-            if (e.target === e.currentTarget) setIsOpen(false); // click outside to close
+            if (e.target === e.currentTarget) setIsMenuOpen(false);
           }}
         >
-          <div className="bg-white rounded-sm shadow-lg w-[700px] p-6 relative">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+          {/* Sidebar */}
+          <div className="relative bg-white w-[260px] h-full shadow-lg p-5 flex flex-col gap-6 animate-slideInLeft">
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition"
+            >
+              <X size={24} />
+            </button>
+
+            <img
+              src="/Logo.svg"
+              alt="Logo"
+              className="w-[120px] object-contain mt-2 mb-8 mx-auto"
+            />
+
+            <button
+              onClick={() => {
+                setIsOpen(true);
+                setIsMenuOpen(false);
+              }}
+              className="bg-[#EBF0FA] font-semibold text-[#3440B5] w-full py-3 border border-[#3440B5] rounded-[6px] hover:bg-[#E0E6F8] transition"
+            >
+              Coaches
+            </button>
+            <button
+              onClick={() => {
+                setIsOpenAthletes(true);
+                setIsMenuOpen(false);
+              }}
+              className="bg-[#EBF0FA] font-semibold text-[#3440B5] w-full py-3 border border-[#3440B5] rounded-[6px] hover:bg-[#E0E6F8] transition"
+            >
+              Athletes
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* COACHES MODAL */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[60]"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsOpen(false);
+          }}
+        >
+          <div className="bg-white rounded-md shadow-lg w-[90%] max-w-[700px] p-6 relative">
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
@@ -50,54 +117,25 @@ const Header = () => {
               Join As a Coach
             </h2>
 
-            <form className="flex flex-col gap-4 mt-10">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className=" font-medium text-[#020817]">Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className=" font-medium text-[#020817]">Email</label>
-                  <input
-                    type="email"
-                    placeholder="john.doe@gmail.com"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
+            <form className="flex flex-col gap-4 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input label="Name" placeholder="John Doe" />
+                <Input
+                  label="Email"
+                  type="email"
+                  placeholder="john.doe@gmail.com"
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className=" font-medium text-[#020817]">Phone</label>
-                  <input
-                    type="text"
-                    placeholder="123 456 7890"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="font-medium text-[#020817]">City</label>
-                  <input
-                    type="text"
-                    placeholder="London"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input label="Phone" placeholder="123 456 7890" />
+                <Input label="City" placeholder="London" />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className=" font-medium text-[#020817]">Message</label>
-                <textarea
-                  placeholder="Tell us about your requirements..."
-                  className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                ></textarea>
-              </div>
+              <Textarea
+                label="Message"
+                placeholder="Tell us about your requirements..."
+              />
 
               <div className="flex justify-end mt-2">
                 <button
@@ -112,14 +150,15 @@ const Header = () => {
         </div>
       )}
 
+      {/* ATHLETES MODAL */}
       {isOpenAthletes && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[60]"
           onClick={(e) => {
-            if (e.target === e.currentTarget) setIsOpenAthletes(false); // click outside to close
+            if (e.target === e.currentTarget) setIsOpenAthletes(false);
           }}
         >
-          <div className="bg-white rounded-sm shadow-lg w-[700px] p-6 relative">
+          <div className="bg-white rounded-md shadow-lg w-[90%] max-w-[700px] p-6 relative">
             <button
               onClick={() => setIsOpenAthletes(false)}
               className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
@@ -128,57 +167,28 @@ const Header = () => {
             </button>
 
             <h2 className="text-[24px] font-bold text-center mb-5">
-              Join As a Athletes
+              Join As an Athlete
             </h2>
 
-            <form className="flex flex-col gap-4 mt-10">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className=" font-medium text-[#020817]">Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className=" font-medium text-[#020817]">Email</label>
-                  <input
-                    type="email"
-                    placeholder="john.doe@gmail.com"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
+            <form className="flex flex-col gap-4 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input label="Name" placeholder="John Doe" />
+                <Input
+                  label="Email"
+                  type="email"
+                  placeholder="john.doe@gmail.com"
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className=" font-medium text-[#020817]">Phone</label>
-                  <input
-                    type="text"
-                    placeholder="123 456 7890"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="font-medium text-[#020817]">City</label>
-                  <input
-                    type="text"
-                    placeholder="London"
-                    className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                  />
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input label="Phone" placeholder="123 456 7890" />
+                <Input label="City" placeholder="London" />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className=" font-medium text-[#020817]">Message</label>
-                <textarea
-                  placeholder="Tell us about your requirements..."
-                  className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
-                ></textarea>
-              </div>
+              <Textarea
+                label="Message"
+                placeholder="Tell us about your requirements..."
+              />
 
               <div className="flex justify-end mt-2">
                 <button
@@ -195,5 +205,27 @@ const Header = () => {
     </>
   );
 };
+
+// Reusable components for cleaner code
+const Input = ({ label, type = "text", placeholder }) => (
+  <div className="flex flex-col gap-1">
+    <label className="font-medium text-[#020817]">{label}</label>
+    <input
+      type={type}
+      placeholder={placeholder}
+      className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
+    />
+  </div>
+);
+
+const Textarea = ({ label, placeholder }) => (
+  <div className="flex flex-col gap-1">
+    <label className="font-medium text-[#020817]">{label}</label>
+    <textarea
+      placeholder={placeholder}
+      className="border border-gray-300 rounded-sm p-2 focus:outline-none focus:ring-2 focus:ring-[#3440B5]"
+    ></textarea>
+  </div>
+);
 
 export default Header;

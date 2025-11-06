@@ -21,11 +21,11 @@ const AppDownload = () => {
             performance
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="text-lg h-14 px-8 shadow-elegant hover:scale-105 transition-smooth ">
+          <div className="flex sm:flex-row gap-4 justify-center items-center">
+            <button className="text-lg h-14   hover:scale-105 transition-smooth ">
               <img src="/apple.svg" />
             </button>
-            <button className="text-lg h-14 px-8 shadow-elegant hover:scale-105 transition-smooth ">
+            <button className="text-lg h-14  hover:scale-105 transition-smooth ">
               <img src="/android.svg" />
             </button>
           </div>

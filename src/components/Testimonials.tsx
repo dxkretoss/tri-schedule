@@ -6,28 +6,28 @@ const testimonials = [
     name: "Sarah Mitchell",
     role: "Marathon Runner",
     image: "/Sarah Mitchell.svg",
-    rating: 5,
+    rating: 4,
     text: "TriSchedule transformed my training. The recovery insights helped me avoid injuries and the smart scheduling kept me consistent. I shaved 15 minutes off my marathon time!",
   },
   {
     name: "James Rodriguez",
     role: "Triathlete",
     image: "/James Rodriguez.svg",
-    rating: 5,
+    rating: 4,
     text: "Managing swim, bike, and run workouts used to be chaotic. TriSchedule's multi-sport tracking and analytics gave me the structure I needed. Best training investment I've made.",
   },
   {
     name: "Emma Chen",
     role: "Fitness Enthusiast",
     image: "/Emma Chen.svg",
-    rating: 5,
+    rating: 4,
     text: "I love how easy it is to track my progress across different activities. The app's interface is beautiful and the sync with my Apple Watch is flawless. Highly recommend!",
   },
   {
     name: "Michael Thompson",
     role: "Cycling Coach",
     image: "/Michael Thompson.svg",
-    rating: 5,
+    rating: 4,
     text: "As a coach, TriSchedule's team features are invaluable. I can monitor all my athletes' training, provide feedback, and adjust plans on the fly. It's a game-changer.",
   },
 ];
@@ -54,10 +54,14 @@ const Testimonials = () => {
             >
               <div className="space-y-4">
                 <div className="flex gap-1">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-5 h-5 fill-primary text-primary"
+                      className={`w-5 h-5 ${
+                        i < testimonial.rating
+                          ? "fill-[#F75D45] text-[#F75D45]"
+                          : "fill-[#FF572480] text-[#FF572480]"
+                      }`}
                     />
                   ))}
                 </div>
