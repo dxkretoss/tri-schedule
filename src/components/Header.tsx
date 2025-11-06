@@ -4,33 +4,39 @@ import { Menu, X } from "lucide-react";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAthletes, setIsOpenAthletes] = useState(false);
+  const [isOpenThanks, setIsOpenThanks] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
       {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F7FB]/80 backdrop-blur-md border-b border-[#E2E8F0]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
-          {/* Left (Logo Placeholder for spacing) */}
-          <div className="w-[169px] flex items-center lg:hidden">
-            {/* MOBILE MENU ICON */}
+        <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
+          {/* LEFT SIDE: Mobile logo + menu */}
+          <div className="flex items-center justify-between w-full lg:hidden">
+            {/* Logo */}
+            <img
+              src="/Logo.svg"
+              alt="Logo"
+              className="h-8 object-contain ml-2"
+            />
+
+            {/* Menu button */}
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="p-2 text-[#3440B5] hover:bg-[#E0E6F8] rounded-md transition"
+              className="p-2 text-[#3440B5] hover:bg-[#E0E6F8] rounded-md transition mr-2"
             >
               <Menu size={26} />
             </button>
           </div>
 
-          <div className="hidden lg:block w-[169px]" />
-
-          {/* Center (Logo) */}
-          <div className="flex justify-end lg:justify-center flex-1">
+          {/* CENTER LOGO (Desktop only) */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:block">
             <img src="/Logo.svg" alt="Logo" className="object-contain" />
           </div>
 
-          {/* Right (Buttons for Desktop Only) */}
-          <div className="hidden lg:flex gap-4">
+          {/* RIGHT SIDE: Desktop Buttons */}
+          <div className="hidden lg:flex gap-4 ml-auto">
             <button
               onClick={() => setIsOpen(true)}
               className="bg-[#EBF0FA] font-semibold text-[#3440B5] w-[120px] h-[42px] border border-[#3440B5] rounded-[6px] hover:bg-[#E0E6F8] transition"
@@ -47,10 +53,10 @@ const Header = () => {
         </div>
       </header>
 
-      {/* MOBILE SIDEBAR MENU */}
+      {/* ✅ MOBILE SIDEBAR MENU */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-50 flex"
+          className="fixed inset-0 z-[60] flex"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMenuOpen(false);
           }}
@@ -95,10 +101,10 @@ const Header = () => {
         </div>
       )}
 
-      {/* COACHES MODAL */}
+      {/* ✅ COACHES MODAL */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[60]"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[70]"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsOpen(false);
           }}
@@ -115,7 +121,14 @@ const Header = () => {
               Join As a Coach
             </h2>
 
-            <form className="flex flex-col gap-4 mt-6">
+            <form
+              className="flex flex-col gap-4 mt-6"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setIsOpen(false);
+                setIsOpenThanks(true);
+              }}
+            >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input label="Name" placeholder="John Doe" />
                 <Input
@@ -148,10 +161,10 @@ const Header = () => {
         </div>
       )}
 
-      {/* ATHLETES MODAL */}
+      {/* ✅ ATHLETES MODAL */}
       {isOpenAthletes && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[60]"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[70]"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsOpenAthletes(false);
           }}
@@ -168,7 +181,14 @@ const Header = () => {
               Join As an Athlete
             </h2>
 
-            <form className="flex flex-col gap-4 mt-6">
+            <form
+              className="flex flex-col gap-4 mt-6"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setIsOpenAthletes(false);
+                setIsOpenThanks(true);
+              }}
+            >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input label="Name" placeholder="John Doe" />
                 <Input
@@ -200,11 +220,47 @@ const Header = () => {
           </div>
         </div>
       )}
+
+      {/* ✅ THANK YOU MODAL */}
+      {isOpenThanks && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-[80]"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsOpenThanks(false);
+          }}
+        >
+          <div className="bg-white rounded-md shadow-lg w-[90%] max-w-[500px] p-8 text-center relative animate-fadeIn">
+            <button
+              onClick={() => setIsOpenThanks(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
+            >
+              ✕
+            </button>
+
+            <h2 className="text-[28px] font-bold text-[#3440B5] mb-3">
+              Thank You!
+            </h2>
+
+            <img
+              src="/thanks.svg"
+              alt="Thank you"
+              className="mx-auto mb-4 w-[120px] h-[120px]"
+            />
+
+            <p className="text-gray-600 text-[16px] leading-relaxed">
+              Your details have been submitted{" "}
+              <span className="font-bold">successfully</span>. Our team will
+              review your information and contact you shortly to help you get
+              started with <span className="font-bold">TriSchedule</span>.
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-// Reusable components for cleaner code
+/* ✅ Reusable Input and Textarea */
 const Input = ({ label, type = "text", placeholder }) => (
   <div className="flex flex-col gap-1">
     <label className="font-medium text-[#020817]">{label}</label>
