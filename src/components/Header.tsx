@@ -16,9 +16,9 @@ const Header = () => {
           <div className="flex items-center justify-between w-full lg:hidden">
             {/* Logo */}
             <img
-              src="/Logo.svg"
+              src="/logo.png"
               alt="Logo"
-              className="h-8 object-contain ml-2"
+              className="object-contain h-[40px] ml-2"
             />
 
             {/* Menu button */}
@@ -32,7 +32,11 @@ const Header = () => {
 
           {/* CENTER LOGO (Desktop only) */}
           <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:block">
-            <img src="/Logo.svg" alt="Logo" className="object-contain" />
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="w-[165px] object-contain"
+            />
           </div>
 
           {/* RIGHT SIDE: Desktop Buttons */}
@@ -74,9 +78,9 @@ const Header = () => {
             </button>
 
             <img
-              src="/Logo.svg"
+              src="/logo.png"
               alt="Logo"
-              className="w-[120px] object-contain mt-2 mb-8 mx-auto"
+              className=" h-[40px] object-contain mt-2 mb-8 mx-auto"
             />
 
             <button
