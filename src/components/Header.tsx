@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
@@ -7,6 +7,30 @@ const Header = () => {
   const [isOpenThanks, setIsOpenThanks] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // ✅ Load SendFox script once and listen for successful submission
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://cdn.sendfox.com/js/form.js";
+    script.charset = "utf-8";
+    document.body.appendChild(script);
+
+    const handleSuccess = (event) => {
+      if (event.target.id === "3qeezl") {
+        setTimeout(() => {
+          setIsOpen(false);
+          setIsOpenThanks(true);
+        }, 500);
+      }
+    };
+
+    document.addEventListener("sendfox:form-submitted", handleSuccess);
+
+    return () => {
+      document.removeEventListener("sendfox:form-submitted", handleSuccess);
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <>
       {/* HEADER */}
@@ -14,14 +38,11 @@ const Header = () => {
         <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
           {/* LEFT SIDE: Mobile logo + menu */}
           <div className="flex items-center justify-between w-full lg:hidden">
-            {/* Logo */}
             <img
               src="/logo.png"
               alt="Logo"
               className="object-contain h-[40px] ml-2"
             />
-
-            {/* Menu button */}
             <button
               onClick={() => setIsMenuOpen(true)}
               className="p-2 text-[#3440B5] hover:bg-[#E0E6F8] rounded-md transition mr-2"
@@ -65,10 +86,7 @@ const Header = () => {
             if (e.target === e.currentTarget) setIsMenuOpen(false);
           }}
         >
-          {/* Backdrop */}
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-
-          {/* Sidebar */}
           <div className="relative bg-white w-[260px] h-full shadow-lg p-5 flex flex-col gap-6 animate-slideInLeft">
             <button
               onClick={() => setIsMenuOpen(false)}
@@ -80,7 +98,7 @@ const Header = () => {
             <img
               src="/logo.png"
               alt="Logo"
-              className=" h-[40px] object-contain mt-2 mb-8 mx-auto"
+              className="h-[40px] object-contain mt-2 mb-8 mx-auto"
             />
 
             <button
@@ -121,45 +139,51 @@ const Header = () => {
               ✕
             </button>
 
-            <h2 className="text-[24px] font-bold text-center mb-5">
+            <h2 className="text-[24px] font-bold text-center mb-5 text-[#3440B5]">
               Join As a Coach
             </h2>
 
             <form
-              className="flex flex-col gap-4 mt-6"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setIsOpen(false);
-                setIsOpenThanks(true);
-              }}
+              method="post"
+              action="https://sendfox.com/form/mp8yzl/3qeezl"
+              className="sendfox-form flex flex-col justify-center"
+              id="3qeezl"
+              data-async="true"
+              data-recaptcha="true"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input label="Name" placeholder="John Doe" />
-                <Input
-                  label="Email"
-                  type="email"
-                  placeholder="john.doe@gmail.com"
+              <input
+                type="text"
+                id="sendfox_form_first_name"
+                placeholder="First Name (optional)"
+                name="first_name"
+                className="block w-full mb-3 p-2 border rounded"
+              />
+              <input
+                type="email"
+                id="sendfox_form_email"
+                placeholder="Email Address"
+                name="email"
+                required
+                className="block w-full mb-3 p-2 border rounded"
+              />
+              <div
+                style={{ position: "absolute", left: "-5000px" }}
+                aria-hidden="true"
+              >
+                <input
+                  type="text"
+                  name="a_password"
+                  tabIndex="-1"
+                  autoComplete="off"
+                  defaultValue=""
                 />
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input label="Phone" placeholder="123 456 7890" />
-                <Input label="City" placeholder="London" />
-              </div>
-
-              <Textarea
-                label="Message"
-                placeholder="Tell us about your requirements..."
-              />
-
-              <div className="flex justify-end mt-2">
-                <button
-                  type="submit"
-                  className="bg-[#3440B5] text-white font-semibold py-2 px-6 rounded-sm hover:bg-[#2b359a] transition"
-                >
-                  Submit
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="bg-[#3440B5] hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+              >
+                Get Free Training Plan
+              </button>
             </form>
           </div>
         </div>
@@ -181,7 +205,7 @@ const Header = () => {
               ✕
             </button>
 
-            <h2 className="text-[24px] font-bold text-center mb-5">
+            <h2 className="text-[24px] font-bold text-center mb-5 text-[#3440B5]">
               Join As an Athlete
             </h2>
 
